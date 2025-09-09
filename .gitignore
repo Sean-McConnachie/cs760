@@ -144,5 +144,17 @@ training_logs
 
 data/
 notebooks
-Diffueraser\weights
+
+# diffuEraser ignrores
+Diffueraser/weights
+Diffueraser/logs
+Diffueraser/dataset
+Diffueraser/assets
+Diffueraser/data
+Diffueraser/examples
+
+
+
+
+
 
