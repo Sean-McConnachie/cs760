@@ -9,8 +9,8 @@ def main():
 
     ## input params
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_video', type=str, default="examples/example3/video.mp4", help='Path to the input video')
-    parser.add_argument('--input_mask', type=str, default="examples/example3/mask.mp4" , help='Path to the input mask')
+    parser.add_argument('--input_video', type=str, default="examples/example3/video.avi", help='Path to the input video')
+    parser.add_argument('--input_mask', type=str, default="examples/example3/mask.avi" , help='Path to the input mask')
     parser.add_argument('--video_length', type=int, default=10, help='The maximum length of output video')
     parser.add_argument('--mask_dilation_iter', type=int, default=8, help='Adjust it to change the degree of mask expansion')
     parser.add_argument('--max_img_size', type=int, default=960, help='The maximum length of output width and height')
