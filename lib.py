@@ -51,29 +51,56 @@ def ensure_video_and_mask_match(video_stats: VideoStats, mask_stats: VideoStats)
     assert video_stats.frame_count == mask_stats.frame_count, f"Video frame count {video_stats.frame_count} does not match mask frame count {mask_stats.frame_count}"
 
 
+
 def iter_dir_for_video_and_mask(
     dir: str,
+    video_dir: str = "originals",
+    mask_dir: str = "masks",
     video_suffix: str = ".avi",
-    mask_suffix: str = "_shake_mask.avi",
+    mask_suffix: str = "_mask.avi",
 ) -> list[dict[str, str]]:
     """Iterate through a directory and find video and mask pairs.
-
-    Args:
-        dir (str): The directory to search.
-        video_suffix (str, optional): The suffix for video files. Defaults to ".avi".
-        mask_suffix (str, optional): The suffix for mask files. Defaults to "_shake_mask.avi".
-
     Returns:
         list[dict[str, str]]: A list of dictionaries containing video and mask paths.
     """
     videos = []
     dir = os.path.abspath(dir)  # normalise the base directory
-    for fname in os.listdir(dir):
-        if fname.endswith(video_suffix) and not fname.endswith(mask_suffix):
-            video_name = fname.replace(video_suffix, "")
-            video_path = os.path.abspath(os.path.join(dir, fname))
-            mask_path = os.path.abspath(os.path.join(dir, video_name + mask_suffix))
-            video = {"video_name": video_name, "video": video_path, "mask": mask_path}
-            assert os.path.exists(video["mask"]), f"Mask file does not exist: {video['mask']}"
-            videos.append(video)
+    video_dir = os.path.join(dir, video_dir)
+    mask_dir = os.path.join(dir, mask_dir)
+    for fname in os.listdir(video_dir):
+        assert fname.endswith(video_suffix) and not fname.endswith(mask_suffix)
+        video_name = fname.replace(video_suffix, "")
+        video_path = os.path.abspath(os.path.join(video_dir, fname))
+        mask_path = os.path.abspath(os.path.join(mask_dir, video_name + mask_suffix))
+        video = {"video_name": video_name, "video": video_path, "mask": mask_path}
+        assert os.path.exists(video["mask"]), f"Mask file does not exist: {video['mask']}"
+        videos.append(video)
     return videos
+
+
+# def iter_dir_for_video_and_mask(
+#     dir: str,
+#     video_suffix: str = ".avi",
+#     mask_suffix: str = "_mask.avi",
+# ) -> list[dict[str, str]]:
+#     """Iterate through a directory and find video and mask pairs.
+
+#     Args:
+#         dir (str): The directory to search.
+#         video_suffix (str, optional): The suffix for video files. Defaults to ".avi".
+#         mask_suffix (str, optional): The suffix for mask files. Defaults to "_shake_mask.avi".
+
+#     Returns:
+#         list[dict[str, str]]: A list of dictionaries containing video and mask paths.
+#     """
+#     videos = []
+#     dir = os.path.abspath(dir)  # normalise the base directory
+#     for fname in os.listdir(dir):
+#         if fname.endswith(video_suffix) and not fname.endswith(mask_suffix):
+#             video_name = fname.replace(video_suffix, "")
+#             video_path = os.path.abspath(os.path.join(dir, fname))
+#             mask_path = os.path.abspath(os.path.join(dir, video_name + mask_suffix))
+#             video = {"video_name": video_name, "video": video_path, "mask": mask_path}
+#             assert os.path.exists(video["mask"]), f"Mask file does not exist: {video['mask']}"
+#             videos.append(video)
+#     return videos

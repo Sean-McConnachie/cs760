@@ -25,28 +25,32 @@ def run_model(
         mask_stats = get_video_stats(video["mask"])
         mask_stats.frame_count = video_stats.frame_count  # TODO: HACK
         ensure_video_and_mask_match(video_stats, mask_stats)
-        # assert video_stats.width == output_width
-        # assert video_stats.height == output_height
+        assert video_stats.width == output_width
+        assert video_stats.height == output_height
 
     # do the actual inference
     for video in tqdm(iter_dir_for_video_and_mask(input_dir), desc=f"Running inference for {model_name}"):
+        out_fp = os.path.join(output_dir, f"{video['video_name']}.mp4")
+        if os.path.exists(out_fp):
+            print(f"Skipping {video['video_name']} as output already exists")
+            continue
+        
         video_stats = get_video_stats(video["video"])
 
         wan_out_fp = model_func(
             input_video=video["video"],
             input_mask=video["mask"],
             output_prefix=model_name,
-            output_frames=30  # TODO: Use frame count
+            output_frames=video_stats.frame_count
         )
         wan_out_fp = os.path.join(COMFY_UI_REPO_PATH, "output", wan_out_fp)
-        out_fp = os.path.join(output_dir, f"{video['video_name']}.mp4")
         os.rename(wan_out_fp, out_fp)
 
 
 if __name__ == "__main__":
     output_width, output_height = 320, 240
-    input_dir = "../temp/inputs"
-    output_dir = "../temp/outputs"
+    input_dir = "../out_pairs"
+    output_dir = "../outputs"
     model_runs = [
         # {
         #     "name": "wan_1.3",

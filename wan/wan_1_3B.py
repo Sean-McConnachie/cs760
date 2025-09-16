@@ -172,21 +172,21 @@ def run_inpainting_wan_1_3(
 
         loadvideo_229 = loadvideo.load_video(file=input_mask)
 
-        getvideocomponents_230 = getvideocomponents.get_components(
+        orig_img = getvideocomponents.get_components(
             video=get_value_at_index(loadvideo_229, 0)
         )
 
         imagetomask = NODE_CLASS_MAPPINGS["ImageToMask"]()
-        imagetomask_232 = imagetomask.image_to_mask(
-            channel="red", image=get_value_at_index(getvideocomponents_230, 0)
+        orig_mask = imagetomask.image_to_mask(
+            channel="red", image=get_value_at_index(orig_img, 0)
         )
 
         invertmask = NODE_CLASS_MAPPINGS["InvertMask"]()
-        invertmask_233 = invertmask.invert(mask=get_value_at_index(imagetomask_232, 0))
+        inv_mask = invertmask.invert(mask=get_value_at_index(orig_mask, 0))
 
         masktoimage = NODE_CLASS_MAPPINGS["MaskToImage"]()
-        masktoimage_234 = masktoimage.mask_to_image(
-            mask=get_value_at_index(invertmask_233, 0)
+        inv_img = masktoimage.mask_to_image(
+            mask=get_value_at_index(inv_mask, 0)
         )
 
         imagecompositemasked = NODE_CLASS_MAPPINGS["ImageCompositeMasked"]()
@@ -195,8 +195,8 @@ def run_inpainting_wan_1_3(
             y=0,
             resize_source=True,
             destination=get_value_at_index(getvideocomponents_210, 0),
-            source=get_value_at_index(masktoimage_234, 0),
-            mask=get_value_at_index(imagetomask_232, 0),
+            source=get_value_at_index(orig_img, 0),
+            mask=get_value_at_index(inv_mask, 0),
         )
 
         wanvacetovideo = NODE_CLASS_MAPPINGS["WanVaceToVideo"]()
@@ -210,7 +210,7 @@ def run_inpainting_wan_1_3(
             negative=get_value_at_index(cliptextencode_7, 0),
             vae=get_value_at_index(vaeloader_39, 0),
             control_video=get_value_at_index(imagecompositemasked_236, 0),
-            control_masks=get_value_at_index(imagetomask_232, 0),
+            control_masks=get_value_at_index(inv_mask, 0),
         )
 
         modelsamplingsd3 = NODE_CLASS_MAPPINGS["ModelSamplingSD3"]()
