@@ -20,7 +20,9 @@ def run_model(
     output_dir = os.path.join(output_root, model_name)
     os.makedirs(output_dir, exist_ok=True)
     # run once to ensure video and mask match and the program doesn't crash half way through
-    for video in tqdm(iter_dir_for_video_and_mask(input_dir), desc="Checking video and mask"):
+    for video in tqdm(iter_dir_for_video_and_mask(
+        input_dir, video_dir="stabilised"
+    ), desc="Checking video and mask"):
         video_stats = get_video_stats(video["video"])
         mask_stats = get_video_stats(video["mask"])
         mask_stats.frame_count = video_stats.frame_count  # TODO: HACK
@@ -29,22 +31,27 @@ def run_model(
         assert video_stats.height == output_height
 
     # do the actual inference
-    for video in tqdm(iter_dir_for_video_and_mask(input_dir), desc=f"Running inference for {model_name}"):
+    for video in tqdm(iter_dir_for_video_and_mask(
+        input_dir, video_dir="stabilised"
+    ), desc=f"Running inference for {model_name}"):
         out_fp = os.path.join(output_dir, f"{video['video_name']}.mp4")
         if os.path.exists(out_fp):
             print(f"Skipping {video['video_name']} as output already exists")
             continue
-        
+
         video_stats = get_video_stats(video["video"])
 
-        wan_out_fp = model_func(
-            input_video=video["video"],
-            input_mask=video["mask"],
-            output_prefix=model_name,
-            output_frames=video_stats.frame_count
-        )
-        wan_out_fp = os.path.join(COMFY_UI_REPO_PATH, "output", wan_out_fp)
-        os.rename(wan_out_fp, out_fp)
+        try:
+            wan_out_fp = model_func(
+                input_video=video["video"],
+                input_mask=video["mask"],
+                output_prefix=model_name,
+                output_frames=video_stats.frame_count
+            )
+            wan_out_fp = os.path.join(COMFY_UI_REPO_PATH, "output", wan_out_fp)
+            os.rename(wan_out_fp, out_fp)
+        except Exception as e:
+            print(f"Error processing {video['video_name']}: {e}")
 
 
 if __name__ == "__main__":
@@ -52,10 +59,10 @@ if __name__ == "__main__":
     input_dir = "../out_pairs"
     output_dir = "../outputs"
     model_runs = [
-        # {
-        #     "name": "wan_1.3",
-        #     "function": run_inpainting_wan_1_3
-        # },
+        {
+            "name": "wan_1.3",
+            "function": run_inpainting_wan_1_3
+        },
         {
             "name": "wan_14",
             "function": run_inpainting_wan_14
