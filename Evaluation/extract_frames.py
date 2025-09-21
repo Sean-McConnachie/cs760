@@ -1,6 +1,7 @@
 import os
 import shutil
 
+
 orig_videos_path = r"C:\Users\Sreelakshmi Gireesh\video_inpainting_dataset\inpainting_full\inpainting\inpainting\src"
 inpainted_videos_path = r"C:\Users\Sreelakshmi Gireesh\video_inpainting_dataset\inpainting_full\inpainting\inpainting\fake"
 
@@ -11,7 +12,9 @@ def copy_frames(video_path, output_path):
     os.makedirs(output_path, exist_ok=True)
     for folder_name in os.listdir(video_path):
         folder_path = os.path.join(video_path, folder_name)
-        out_folder = os.path.join(output_path, folder_name)
+        base_name, _ = os.path.splitext(folder_name)
+
+        out_folder = os.path.join(output_path, base_name)
         os.makedirs(out_folder, exist_ok=True)
         
         for file_name in os.listdir(folder_path):
