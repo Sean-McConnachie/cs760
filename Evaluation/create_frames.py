@@ -1,8 +1,8 @@
 import cv2
 import os
 
-orig_videos_path = r"C:\Users\Sreelakshmi Gireesh\video_inpainting_dataset\inpainting_full\inpainting\inpainting\src"
-inpainted_videos_path = r"C:\Users\Sreelakshmi Gireesh\video_inpainting_dataset\inpainting_full\inpainting\inpainting\fake"
+orig_videos_path = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\dataset\originals"
+inpainted_videos_path = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\dataset\Wan\wan_14"
 
 
 orig_frames_out = "frames/original"
@@ -12,7 +12,7 @@ def extract_frames(video_path, output_path):
     os.makedirs(output_path, exist_ok=True)
 
     for file_name in os.listdir(video_path):
-        if file_name.endswith(".mp4", ".avi"):  # only process videos
+        if file_name.endswith(".mp4") or file_name.endswith(".avi"):  # only process videos  # only process videos
             video_file = os.path.join(video_path, file_name)
             cap = cv2.VideoCapture(video_file)
 
