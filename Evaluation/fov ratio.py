@@ -1,9 +1,11 @@
 import os
 import cv2
 import numpy as np
+import pandas as pd  
+
 
 orig_base = "frames/original"
-inp_base = "frames/inpainted/DFGVI"  
+inp_base = "frames/inpainted"  
 
 video_names = sorted(os.listdir(orig_base))
 
@@ -11,7 +13,8 @@ fov_results = {}
 
 for video_name in video_names:
     orig_folder = os.path.join(orig_base, video_name)
-    inp_folder = os.path.join(inp_base, video_name)
+    inp_folder = os.path.join(inp_base, video_name + "_output") # Adjusted to match the output folder naming convention
+    # inp_folder = os.path.join(inp_base, video_name)
     
     orig_frames = sorted(os.listdir(orig_folder))
     inp_frames = sorted(os.listdir(inp_folder))
@@ -32,4 +35,7 @@ for video_name in video_names:
     avg_fov = np.mean(fov_ratios)
     fov_results[video_name] = avg_fov
     print(f"Average Preserved FOV Ratio for '{video_name}': {avg_fov:.4f}")
-
+    
+df = pd.DataFrame(list(fov_results.items()), columns=["Video_Name", "Avg_FOV_Ratio"])
+df.to_csv("fov_results.csv", index=False)
+print("\nResults saved to fov_results.csv")
