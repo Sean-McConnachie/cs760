@@ -52,7 +52,8 @@ for root, _, files in os.walk(orig_dir):
         orig_path = os.path.join(root, fname)
 
         # Expected result filename pattern: "<base>_output.mp4"
-        res_fname = f"{base}_output.mp4"
+        # res_fname = f"{base}_output.mp4"
+        res_fname = f"{base}.mp4"
 
         # If results are flat in res_dir, look there; otherwise try mirroring subfolders
         candidate_paths = [

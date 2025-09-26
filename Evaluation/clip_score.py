@@ -55,7 +55,8 @@ for video_name in sorted(os.listdir(orig_base)):
         continue
 
     # Find corresponding inpainted folder with _output
-    inp_folder = os.path.join(inp_base, video_name + "_output")
+    # inp_folder = os.path.join(inp_base, video_name + "_output")
+    inp_folder = os.path.join(inp_base, video_name )
     if not os.path.isdir(inp_folder):
         print(f"⚠️ Skipping {video_name}, no inpainted folder found.")
         continue
