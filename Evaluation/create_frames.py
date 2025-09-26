@@ -12,7 +12,6 @@ def extract_frames(video_path, output_path):
     os.makedirs(output_path, exist_ok=True)
 
     for file_name in os.listdir(video_path):
-        print(file_name)
         if file_name.endswith(".mp4") or file_name.endswith(".avi"):  # only process videos
             video_file = os.path.join(video_path, file_name)
             cap = cv2.VideoCapture(video_file)
