@@ -3,6 +3,9 @@ import numpy as np
 import os
 import csv
 
+orig_dir = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\dataset\originals"
+res_dir  = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\results"
+out_csv  = "fvd_scores.csv"
 
 def load_video_frames(video_path, max_frames=16, resize=(64, 64)):
     cap = cv2.VideoCapture(video_path)
@@ -34,21 +37,8 @@ def simple_fvd(feat1, feat2):
 
     return mean_diff + cov_diff
 
-# Paths
-orig_video = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\dataset\originals\#122_Cleaning_Up_The_Beach_In_Chiba__Japan_pick_f_nm_np1_le_bad_2.avi"
-inp_video  = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\results\#122_Cleaning_Up_The_Beach_In_Chiba__Japan_pick_f_nm_np1_le_bad_2_output.mp4"
 
 
-# Load and compute
-orig_feat = extract_features(load_video_frames(orig_video))
-inp_feat  = extract_features(load_video_frames(inp_video))
-
-fvd_score = simple_fvd(orig_feat, inp_feat)
-print("FVD score:", fvd_score)
-
-orig_dir = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\dataset\originals"
-res_dir  = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\results"
-out_csv  = "fvd_scores.csv"
 
 results = []
 
@@ -101,4 +91,15 @@ with open(out_csv, "w", newline="", encoding="utf-8") as f:
     for name, score in results:
         writer.writerow([name, score])
 
+# # Paths
+# orig_video = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\dataset\originals\#122_Cleaning_Up_The_Beach_In_Chiba__Japan_pick_f_nm_np1_le_bad_2.avi"
+# inp_video  = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\results\#122_Cleaning_Up_The_Beach_In_Chiba__Japan_pick_f_nm_np1_le_bad_2_output.mp4"
+
+
+# # Load and compute
+# orig_feat = extract_features(load_video_frames(orig_video))
+# inp_feat  = extract_features(load_video_frames(inp_video))
+
+# fvd_score = simple_fvd(orig_feat, inp_feat)
+# print("FVD score:", fvd_score)
 print(f"\nSaved {len(results)} rows to {out_csv}")
