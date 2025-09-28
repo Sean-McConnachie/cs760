@@ -15,9 +15,13 @@ for video_name in video_names:
     orig_folder = os.path.join(orig_base, video_name)
     # inp_folder = os.path.join(inp_base, video_name + "_output") # Adjusted to match the output folder naming convention
     inp_folder = os.path.join(inp_base, video_name)
-    
+    inp_frames = []
     orig_frames = sorted(os.listdir(orig_folder))
-    inp_frames = sorted(os.listdir(inp_folder))
+    if(os.path.isdir(inp_folder)==False):
+        print(f"⚠️ Skipping {video_name}, no inpainted folder found.")
+        continue
+    else:
+        inp_frames = sorted(os.listdir(inp_folder))
     
     fov_ratios = []
     

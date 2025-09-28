@@ -4,7 +4,7 @@ import os
 import csv
 
 orig_dir = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\dataset\originals"
-res_dir  = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\results"
+res_dir  = r"C:\Users\pc\Documents\Uni\Csc760\cs760\Diffueraser\dataset\Wan\wan_14"
 out_csv  = "fvd_scores.csv"
 
 def load_video_frames(video_path, max_frames=16, resize=(64, 64)):
