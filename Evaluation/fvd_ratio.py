@@ -4,7 +4,7 @@ import os
 import csv
 
 orig_dir = "out_pairs/originals"
-res_dir  = "outputs/wan_1.3"
+res_dir  = "outputs/StableDiffusion"
 out_csv  = "fvd_scores.csv"
 
 def load_video_frames(video_path, max_frames=16, resize=(64, 64)):
@@ -53,7 +53,7 @@ for root, _, files in os.walk(orig_dir):
 
         # Expected result filename pattern: "<base>_output.mp4"
         # res_fname = f"{base}_output.mp4"
-        res_fname = f"{base}.mp4"
+        res_fname = f"{base}.avi"
 
         # If results are flat in res_dir, look there; otherwise try mirroring subfolders
         candidate_paths = [

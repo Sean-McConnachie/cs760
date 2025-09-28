@@ -2,7 +2,7 @@ import cv2
 import os
 
 orig_videos_path = f"out_pairs/originals"
-inpainted_videos_path = f"outputs/wan_1.3"
+inpainted_videos_path = f"outputs/StableDiffusion"
 
 
 orig_frames_out = "frames/original"
