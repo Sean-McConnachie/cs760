@@ -1,0 +1,17 @@
+model,metric,top3_mean,top3_std,worst3_mean,worst3_std
+DiffuEraser,Temporal consistency,3.667,0.577,1.833,0.289
+DiffuEraser,Texture,2.833,0.764,1.5,0.866
+DiffuEraser,Motion smoothness,3.5,0.5,1.5,0.5
+DiffuEraser,Artifacting,2.667,1.041,3.0,0.0
+Stable Diffusion,Temporal consistency,1.167,0.289,1.0,0.0
+Stable Diffusion,Texture,1.0,0.0,1.0,0.0
+Stable Diffusion,Motion smoothness,1.0,0.0,1.0,0.0
+Stable Diffusion,Artifacting,5.0,0.0,4.833,0.289
+WAN 1.3B,Temporal consistency,4.833,0.289,3.0,0.0
+WAN 1.3B,Texture,4.833,0.289,3.333,0.577
+WAN 1.3B,Motion smoothness,5.0,0.0,3.0,0.5
+WAN 1.3B,Artifacting,1.333,0.577,3.5,1.0
+WAN 14B,Temporal consistency,5.0,0.0,4.667,0.289
+WAN 14B,Texture,4.833,0.289,3.833,0.577
+WAN 14B,Motion smoothness,5.0,0.0,4.667,0.289
+WAN 14B,Artifacting,1.0,0.0,1.0,0.0
